@@ -28,38 +28,29 @@ const BASE_URL = siteConfig.api.baseUrl;
 
 /**
  * Type-safe POST request to the prediction endpoint.
- * Throws on non-OK responses with a descriptive message.
+ * (Now mathematically computed locally to run 100% free without a backend server).
  */
 export async function fetchPrediction(
   data: PredictionRequest
 ): Promise<PredictionResponse> {
-  const res = await fetch(
-    `${BASE_URL}${siteConfig.api.endpoints.predict}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    }
-  );
+  // Simulasikan delay network agar UI loading state tetap terasa natural
+  await new Promise((resolve) => setTimeout(resolve, 600));
 
-  if (!res.ok) {
-    const error: ApiError = await res.json().catch(() => ({
-      detail: "An unexpected error occurred.",
-    }));
-    throw new Error(error.detail);
-  }
+  // Menghitung prediksi secara lokal menggunakan rumus regresi linear dari model_forecasting_listrik.pkl
+  // Coef: 9.88265712
+  // Intercept: -19666.997795689073
+  const calculated_prediction = (data.tahun * 9.88265712) - 19666.997795689073;
 
-  return res.json() as Promise<PredictionResponse>;
+  return {
+    tahun: data.tahun,
+    estimasi_produksi_twh: Number(calculated_prediction.toFixed(2)),
+  };
 }
 
 /**
  * Health-check — verifies the API is reachable.
+ * (Always true since we are serverless now).
  */
 export async function checkApiHealth(): Promise<boolean> {
-  try {
-    const res = await fetch(BASE_URL, { method: "GET" });
-    return res.ok;
-  } catch {
-    return false;
-  }
+  return true;
 }
