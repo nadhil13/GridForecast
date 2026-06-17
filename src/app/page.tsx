@@ -21,7 +21,7 @@ export default function HomePage() {
   return (
     <PageWrapper className="max-w-none px-0 py-0 lg:py-0 lg:px-0">
       <div className="relative w-full overflow-hidden">
-        
+
         {/* ── Subtle Backgrounds ── */}
         <div className="pointer-events-none fixed inset-0 z-0 bg-speckled mix-blend-multiply dark:mix-blend-screen" />
         <div className="pointer-events-none fixed inset-0 z-0 bg-ring-particles opacity-30" />
@@ -31,8 +31,8 @@ export default function HomePage() {
         {/* ── Hero Section (Clean Flow, No Sticky Overlaps) ── */}
         <section className="relative z-20 flex min-h-screen flex-col items-center justify-center text-center px-6 pt-24 pb-32 lg:pt-32 lg:pb-40">
           <div className="flex flex-col items-center w-full max-w-5xl mx-auto">
-            
-            <motion.div 
+
+            <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -44,7 +44,7 @@ export default function HomePage() {
               </span>
             </motion.div>
 
-            <motion.h1 
+            <motion.h1
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
@@ -62,7 +62,7 @@ export default function HomePage() {
             </div>
 
             {/* CTA buttons */}
-            <motion.div 
+            <motion.div
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -74,7 +74,7 @@ export default function HomePage() {
                   <ArrowRight className="h-[clamp(1rem,3vw,1.25rem)] w-[clamp(1rem,3vw,1.25rem)] transition-transform duration-300" />
                 </Link>
               </MagneticButton>
-              
+
               <MagneticButton strength={0.2} className="group relative inline-flex h-[clamp(3rem,8vw,3.5rem)] w-full items-center justify-center gap-[0.4rem] rounded-full border border-border/40 bg-background/50 px-[1.5em] py-[0.6em] text-sm font-semibold text-foreground shadow-sm backdrop-blur-md transition-all duration-300 hover:bg-accent hover:shadow-md hover:-translate-y-1 sm:w-auto">
                 <Link href="/analytics" className="relative z-10 w-full h-full flex items-center justify-center">
                   View Analytics

@@ -67,7 +67,7 @@ export default function AnalyticsChart({ isDark }: AnalyticsChartProps) {
     }
 
     if (parseInt(_refAreaLeft) > parseInt(_refAreaRight)) {
-      [ _refAreaLeft, _refAreaRight ] = [ _refAreaRight, _refAreaLeft ];
+      [_refAreaLeft, _refAreaRight] = [_refAreaRight, _refAreaLeft];
     }
 
     const refDataSubset = data.filter((d) => d.tahun >= parseInt(_refAreaLeft) && d.tahun <= parseInt(_refAreaRight));
