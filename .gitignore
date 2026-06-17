@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/
+env/
+
+# Ignore frontend specific stuff at root level too just in case
+frontend/node_modules/
+frontend/.next/

@@ -1,0 +1,460 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   DESIGN SYSTEM — National Electricity Demand Forecasting
+   (Google Antigravity Edition)
+   ============================================================ */
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@layer base, tokens, layout, components, utilities, moderncss, animations;
+
+@layer tokens {
+  :root {
+    --background: #FFFFFF;
+    --foreground: #18181B;
+
+    --card: #FFFFFF;
+    --card-foreground: #18181B;
+
+    --popover: #FFFFFF;
+    --popover-foreground: #18181B;
+
+    --primary: #18181B;
+    --primary-foreground: #FAFAFA;
+
+    --secondary: #F4F4F5;
+    --secondary-foreground: #18181B;
+
+    --muted: #F4F4F5;
+    --muted-foreground: #71717A;
+
+    --accent: #F4F4F5;
+    --accent-foreground: #18181B;
+
+    --destructive: #DC2626;
+
+    --border: #E4E4E7;
+    --input: #E4E4E7;
+    --ring: #A1A1AA;
+
+    --radius: 1rem;
+
+    /* Custom Easings for Natural Transitions */
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    /* Semantic Themes (Google Antigravity Style) */
+    --theme-surface-on-surface: var(--foreground);
+    --theme-primary-on-primary: var(--primary-foreground);
+    --theme-outline-variant: var(--border);
+    --theme-button-secondary-hover: var(--accent);
+  }
+
+  .dark {
+    --background: #0A0A0A;
+    --foreground: #FAFAFA;
+
+    --card: #141414;
+    --card-foreground: #FAFAFA;
+
+    --popover: #141414;
+    --popover-foreground: #FAFAFA;
+
+    --primary: #FAFAFA;
+    --primary-foreground: #0A0A0A;
+
+    --secondary: #1C1C1E;
+    --secondary-foreground: #FAFAFA;
+
+    --muted: #1C1C1E;
+    --muted-foreground: #A1A1AA;
+
+    --accent: #27272A;
+    --accent-foreground: #FAFAFA;
+
+    --destructive: #EF4444;
+
+    --border: rgba(255, 255, 255, 0.08);
+    --input: rgba(255, 255, 255, 0.12);
+    --ring: #52525B;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1, "liga" 1; /* Dukungan Ligatur penuh */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain; /* Mencegah pantulan layar pada ujung halaman */
+    min-height: 100dvh; /* Menggunakan DVH untuk mengatasi masalah address bar mobile */
+    
+    /* Fullbleed Grid Architecture */
+    display: grid;
+    grid-template-columns: 
+      [fullbleed-start] 
+      minmax(1rem, 1fr) 
+      [main-start] 
+      minmax(0, 80rem) /* max-w-7xl eq */
+      [main-end] 
+      minmax(1rem, 1fr) 
+      [fullbleed-end];
+    grid-auto-rows: min-content; /* Pertahanan Layout Utama */
+  }
+
+  /* Memaksa elemen anak utama masuk ke zona 'main' secara default */
+  body > * {
+    grid-column: main;
+  }
+
+  /* Elemen yang butuh lebar penuh bisa menggunakan ini */
+  .fullbleed {
+    grid-column: fullbleed;
+    display: grid;
+    grid-template-columns: subgrid; /* Subgrid Penyelamat */
+  }
+
+  /* Clean selection color */
+  ::selection {
+    background: rgba(113, 113, 122, 0.2);
+  }
+
+  /* Focus Visible for Keyboard Accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 0.2rem;
+  }
+
+  .dark ::selection {
+    background: rgba(161, 161, 170, 0.25);
+  }
+
+  /* Custom Elegant Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ring);
+  }
+}
+
+@layer moderncss {
+  /* Hide scrollbar class */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Speckled Backgrounds (CSS Fallback for PaintWorklet) */
+  .bg-speckled {
+    background-image: radial-gradient(var(--muted-foreground) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0, 12px 12px;
+    opacity: 0.1;
+  }
+
+  /* CSS Houdini Paint Engine Optimization (inherits: false) */
+  @property --ring-scale {
+    syntax: '<number>';
+    initial-value: 1;
+    inherits: false; /* Optimasi tingkat tinggi untuk mencegah render ulang berantai */
+  }
+  @property --ring-opacity {
+    syntax: '<number>';
+    initial-value: 0.8;
+    inherits: false;
+  }
+
+  /* Ring Particles (Menggunakan @property untuk animasi hardware-accelerated) */
+  .bg-ring-particles {
+    background: radial-gradient(circle, transparent 30%, rgba(161, 161, 170, 0.05) 31%, transparent 32%),
+                radial-gradient(circle, transparent 40%, rgba(161, 161, 170, 0.08) 41%, transparent 42%),
+                radial-gradient(circle, transparent 50%, rgba(161, 161, 170, 0.03) 51%, transparent 52%);
+    background-size: 150vw 150vw;
+    background-position: center center;
+    /* Animasi sekarang menggerakkan variabel khusus, bukan properti transform langsung */
+    animation: pulse-ring-modern 8s infinite alternate ease-in-out;
+    transform: scale(var(--ring-scale));
+    opacity: var(--ring-opacity);
+  }
+
+  @keyframes pulse-ring-modern {
+    0% { --ring-scale: 1; --ring-opacity: 0.8; }
+    100% { --ring-scale: 1.1; --ring-opacity: 1; }
+  }
+}
+
+@layer animations {
+  /* Scroll-Driven Animations (SDA) & Trigger Scope */
+  @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+    @keyframes sda-scale-up {
+      from { scale: 0.85; opacity: 0; transform: translateY(50px); }
+      to { scale: 1; opacity: 1; transform: translateY(0); }
+    }
+
+    .sda-card {
+      /* Isolasi Fokus Animasi: Mencegah trigger bocor ke elemen luar */
+      timeline-scope: --card-trigger;
+      view-timeline-name: --card-trigger;
+      animation: sda-scale-up linear both;
+      animation-timeline: --card-trigger;
+      animation-range: entry 10% entry 80%;
+    }
+  }
+
+  /* Animasi Gelombang Berbasis Modulus (Staggered Asymmetry) */
+  .staggered-wobble-item {
+    animation: sda-wobble 4s ease-in-out infinite alternate;
+    /* Logika matematika langsung di CSS untuk stagger delay */
+    /* Item 1 delay 0s, Item 2 delay -1s, dst berulang tiap 5 item */
+    animation-delay: calc(mod(var(--sibling-index, 0), 5) * -1s);
+  }
+
+  /* Wobble Effect */
+  @keyframes sda-wobble {
+    from { translate: 0 20px; }
+    to { translate: 0 -20px; }
+  }
+
+  .sda-wobble-icon {
+    animation: sda-wobble 4s ease-in-out infinite alternate;
+  }
+
+  /* Typewriter Effect Keyframes */
+  @keyframes blink {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes type-text {
+    from { background-size: 0; }
+    to { background-size: 100%; }
+  }
+
+  /* HDR & SDR Gradient Support (Menggunakan OKLCH murni untuk interpolasi anti-kusam) */
+  :root {
+    /* Menggunakan OKLCH dalam linear-gradient untuk interpolasi warna yang lebih cerah dan natural */
+    --sdr-gradient: linear-gradient(in oklch, #ff4700, #0ff);
+    --hdr-gradient: linear-gradient(to right in oklch, oklch(65% 0.25 29.23), oklch(75% 0.15 200));
+  }
+
+  .typewriter-text {
+    /* Manipulasi Mesin Tik Berbasis Karakter (1ch) */
+    background: linear-gradient(90deg in oklch, var(--theme-surface-on-surface) 0 0) 0 / 0 no-repeat transparent;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: type-text 2s var(--ease-out-expo) forwards;
+  }
+
+  .typewriter-text::after {
+    content: "|";
+    /* Fallback SDR, overridden by HDR if supported */
+    background: var(--sdr-gradient);
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: blink 0.5s infinite alternate;
+  }
+
+  @media (dynamic-range: high) {
+    .typewriter-text::after {
+      background: var(--hdr-gradient);
+      -webkit-background-clip: text;
+    }
+  }
+
+  /* Marquee Animation */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-100% - var(--gap))); }
+  }
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+}
+
+@layer utilities {
+  .bg-grid {
+    --grid-size: 48px;
+    --dot-size: 1px;
+    background-size: var(--grid-size) var(--grid-size);
+    background-image: radial-gradient(circle, var(--border) var(--dot-size), transparent var(--dot-size));
+    mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black 25%, transparent 100%);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Safe Area & Clipping */
+  .safe-center {
+    place-content: safe center;
+  }
+
+  /* Smooth Native Scrolling */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+
+  /* Space Evaluation (sibling-index) Dinamis */
+  .dynamic-space-eval > div {
+    /* Menggeser elemen ke bawah secara bertingkat berdasarkan urutannya */
+    /* Baris 1 turun 0, Baris 2 turun 1rem, Baris 3 turun 2rem */
+    translate: 0 calc(1rem * var(--sibling-index, 0)) 0;
+  }
+
+  /* Anti-Frustration Mobile Swipe */
+  .carousel-container {
+    overscroll-behavior-x: contain;
+    /* Memberikan ruang kosong buatan di sebelah kanan item terakhir agar bisa snap dengan sempurna */
+    padding-inline: 1.5rem calc(20vi - 1.5rem); 
+  }
+
+  /* CSS Anchor Positioning API (Pengganti Popper.js) */
+  .anchor-header {
+    anchor-name: --main-header;
+  }
+
+  .anchor-menu-mobile {
+    position: absolute;
+    position-anchor: --main-header;
+    position-area: bottom;
+    /* Lebar menu mengikuti lebar header */
+    width: anchor-size(width);
+  }
+
+  /* Hierarki Kedalaman Tanpa Bayangan (Depth via Overlays) */
+  .surface-overlay-1 { background-color: color-mix(in srgb, var(--foreground) 1%, transparent); }
+  .surface-overlay-2 { background-color: color-mix(in srgb, var(--foreground) 3%, transparent); }
+  .surface-overlay-3 { background-color: color-mix(in srgb, var(--foreground) 5%, transparent); }
+  .surface-overlay-4 { background-color: color-mix(in srgb, var(--foreground) 8%, transparent); }
+  .surface-overlay-5 { background-color: color-mix(in srgb, var(--foreground) 12%, transparent); }
+
+  /* Tombol Cerdas Context-Aware :has() */
+  .btn-context-aware {
+    /* Base padding */
+    padding: 0.6em 1.5em;
+    gap: 0.4rem;
+  }
+  
+  /* Jika ada teks diikuti ikon, tambah padding kanan ekstra */
+  .btn-context-aware:has(span + svg) {
+    padding-inline-end: 1em;
+  }
+  
+  /* Jika ada ikon diikuti teks, tambah padding kiri ekstra */
+  .btn-context-aware:has(svg + span) {
+    padding-inline-start: 1em;
+  }
+
+  /* Fake Clipping Text Ilusi */
+  .fake-clip-text {
+    position: relative;
+  }
+  
+  .fake-clip-text::after {
+    content: '';
+    position: absolute;
+    inset: -0.1em -0.1em -0.1em -0.1em;
+    background: var(--background);
+    transform-origin: 0 100%;
+    /* Animasi akan mengurangi scale Y dari 100% ke 0% saat in-view */
+    animation: reveal-text 1s cubic-bezier(0.83, 0, 0.17, 1) forwards;
+  }
+
+  @keyframes reveal-text {
+    from { transform: scaleY(1); }
+    to { transform: scaleY(0); }
+  }
+
+  /* Range Syntax Media Queries (Pemusnahan Media Query Kuno) */
+  @media (width < 930px) {
+    .features-grid-responsive {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (width >= 930px) {
+    .features-grid-responsive {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
