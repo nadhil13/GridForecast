@@ -37,9 +37,9 @@ export async function fetchPrediction(
   await new Promise((resolve) => setTimeout(resolve, 600));
 
   // Menghitung prediksi secara lokal menggunakan rumus regresi linear dari model_forecasting_listrik.pkl
-  // Coef: 9.88265712
-  // Intercept: -19666.997795689073
-  const calculated_prediction = (data.tahun * 9.88265712) - 19666.997795689073;
+  // Coef: 8.89565585112206
+  // Intercept: -17692.938055580187
+  const calculated_prediction = (data.tahun * 8.89565585112206) - 17692.938055580187;
 
   return {
     tahun: data.tahun,
