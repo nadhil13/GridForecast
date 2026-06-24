@@ -35,12 +35,27 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## 🧠 Under the Hood (Model Architecture)
 
+```mermaid
+graph TD;
+    A[Historical Data] -->|Train Model| B(Linear Regression);
+    A -->|Train Model| C(SVR);
+    B --> D[model_forecasting_listrik.pkl];
+    C --> D;
+    D -.->|Extract Coefficients| E{Hardcoded API};
+    E -->|Calculate locally| F[Next.js Client-Side App];
+    F -->|Instant Prediction| G(User Dashboard);
+```
+
 While this repository contains the raw `model_forecasting_listrik.pkl` file, the Next.js app does not load it at runtime. Instead, the model coefficients have been extracted and hardcoded directly into `src/lib/api.ts` to ensure 100% free, localized, and instant prediction calculations.
 
 * **Linear Regression Formula Used:** `Prediction = (Year * 8.89565585112206) - 17692.938055580187`
 * **SVR Optimization:** `SVR Prediction = Linear Prediction * 0.96`
 
 This approach combines the predictive power of Machine Learning with the speed and cost-effectiveness of client-side web development.
+
+## 🤝 Community & Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) for more details. If you find a vulnerability, refer to our [Security Policy](SECURITY.md).
 
 ## 🛠️ Tech Stack
 
