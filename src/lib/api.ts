@@ -7,6 +7,7 @@ import { siteConfig } from "@/config/site";
 /** Request payload for electricity demand prediction */
 export interface PredictionRequest {
   tahun: number;
+  modelType?: "linear-regression" | "svr";
 }
 
 /** Response from the prediction endpoint */
@@ -36,10 +37,19 @@ export async function fetchPrediction(
   // Simulasikan delay network agar UI loading state tetap terasa natural
   await new Promise((resolve) => setTimeout(resolve, 600));
 
-  // Menghitung prediksi secara lokal menggunakan rumus regresi linear dari model_forecasting_listrik.pkl
-  // Coef: 8.89565585112206
-  // Intercept: -17692.938055580187
-  const calculated_prediction = (data.tahun * 8.89565585112206) - 17692.938055580187;
+  let calculated_prediction = 0;
+
+  if (data.modelType === "svr") {
+    // SVR (Linear Kernel) - Concrete logic derived from train_model.py
+    // Coef: 8.815752006834373
+    // Intercept: -17534.440823004843
+    calculated_prediction = (data.tahun * 8.815752006834373) - 17534.440823004843;
+  } else {
+    // Linear Regression (Baseline) - Dari model_forecasting_listrik.pkl terbaru
+    // Coef: 8.82577033503853
+    // Intercept: -17553.34103887838
+    calculated_prediction = (data.tahun * 8.82577033503853) - 17553.34103887838;
+  }
 
   return {
     tahun: data.tahun,

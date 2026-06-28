@@ -25,8 +25,6 @@ export const MODEL_LABELS: Record<ModelType, string> = {
   "svr": "Support Vector Regression (Optimized)",
 } as const;
 
-/** SVR multiplier — simulates a more conservative prediction */
-export const SVR_MULTIPLIER = 0.96;
 
 /** Grid emission factor — Mt CO₂ per TWh (Indonesian average) */
 export const GRID_EMISSION_FACTOR = 0.75;

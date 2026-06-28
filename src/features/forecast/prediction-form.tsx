@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { fadeUpChild } from "@/lib/motion";
 import { fetchPrediction } from "@/lib/api";
 import type { ForecastDataPoint, PredictionStatus, ModelType } from "./types";
-import { MODEL_LABELS, SVR_MULTIPLIER } from "./types";
+import { MODEL_LABELS } from "./types";
 
 /* ============================================================
    PredictionForm — Year input + Model toggle + API call
@@ -61,13 +61,8 @@ export function PredictionForm({
       });
 
       try {
-        const res = await fetchPrediction({ tahun: parsed });
-        let production = res.estimasi_produksi_twh;
-
-        // Apply SVR multiplier if SVR model selected
-        if (modelType === "svr") {
-          production = production * SVR_MULTIPLIER;
-        }
+      const res = await fetchPrediction({ tahun: parsed, modelType });
+      const production = res.estimasi_produksi_twh;
 
         const point: ForecastDataPoint = {
           tahun: res.tahun,

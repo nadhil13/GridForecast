@@ -8,7 +8,6 @@ export { DataTable } from "./data-table";
 export {
   HISTORICAL_DATA,
   MODEL_LABELS,
-  SVR_MULTIPLIER,
   GRID_EMISSION_FACTOR,
   CONFIDENCE_MARGIN,
 } from "./types";
